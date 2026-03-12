@@ -1,28 +1,35 @@
 export default function Table({ columns, data, onRowClick }) {
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
+      <table className="min-w-full">
+        <thead>
+          <tr style={{ backgroundColor: '#003057' }}>
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'DM Sans, system-ui, sans-serif' }}
               >
                 {col.label}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="divide-y divide-slate-100">
           {data.map((row, idx) => (
             <tr
               key={row.id || idx}
               onClick={() => onRowClick?.(row)}
-              className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
+              className={`transition-colors duration-100 ${onRowClick ? 'cursor-pointer' : ''}`}
+              style={{ backgroundColor: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}
+              onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f0f4f8'}
+              onMouseLeave={e => e.currentTarget.style.backgroundColor = idx % 2 === 0 ? '#ffffff' : '#f8fafc'}
             >
               {columns.map((col) => (
-                <td key={col.key} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td
+                  key={col.key}
+                  className="px-5 py-3.5 whitespace-nowrap text-sm text-slate-800"
+                >
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
                 </td>
               ))}
@@ -31,7 +38,7 @@ export default function Table({ columns, data, onRowClick }) {
         </tbody>
       </table>
       {data.length === 0 && (
-        <div className="text-center py-8 text-gray-500">No data available</div>
+        <div className="text-center py-10 text-slate-400 text-sm italic">No data available</div>
       )}
     </div>
   );

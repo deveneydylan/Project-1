@@ -1,6 +1,10 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
-const COLORS = ['#3b82f6', '#10b981', '#8b5cf6'];
+const COLORS = {
+  'Principal': '#003057',
+  'Company Interest': '#EAAA00',
+  'NIL Contribution': '#94a3b8',
+};
 
 export default function PaymentBreakdownChart({ data }) {
   const chartData = [
@@ -24,8 +28,8 @@ export default function PaymentBreakdownChart({ data }) {
           dataKey="value"
           label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
         >
-          {chartData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          {chartData.map((entry) => (
+            <Cell key={entry.name} fill={COLORS[entry.name]} />
           ))}
         </Pie>
         <Tooltip formatter={formatValue} />

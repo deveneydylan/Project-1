@@ -1,38 +1,59 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Card from '../components/common/Card';
 import StatCard from '../components/common/StatCard';
 import Table from '../components/common/Table';
 import AthleteCard from '../components/common/AthleteCard';
-import PaymentBreakdownChart from '../components/charts/PaymentBreakdownChart';
 import * as api from '../api';
+
+const fmt = (val) => `$${(val || 0).toLocaleString()}`;
+
+function StatusBadge({ val }) {
+  const styles = {
+    active: { bg: 'rgba(0,48,87,0.1)', color: '#003057' },
+    paid: { bg: 'rgba(234,170,0,0.12)', color: '#c89200' },
+    defaulted: { bg: 'rgba(239,68,68,0.1)', color: '#dc2626' },
+  };
+  const s = styles[val] || styles.active;
+  return (
+    <span
+      className="px-2.5 py-1 rounded-full text-xs font-medium capitalize"
+      style={{ backgroundColor: s.bg, color: s.color }}
+    >
+      {val}
+    </span>
+  );
+}
 
 export default function ClientDashboard() {
   const { companyId } = useParams();
+  const navigate = useNavigate();
   const [company, setCompany] = useState(null);
   const [loans, setLoans] = useState([]);
   const [stats, setStats] = useState(null);
   const [payments, setPayments] = useState([]);
   const [companies, setCompanies] = useState([]);
+  const [nilDeals, setNilDeals] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       setLoading(true);
       try {
-        const [companyData, loansData, statsData, companiesData] = await Promise.all([
+        const [companyData, loansData, statsData, companiesData, nilDealsData] = await Promise.all([
           api.getCompany(companyId),
           api.getCompanyLoans(companyId),
           api.getCompanyStats(companyId),
           api.getCompanies(),
+          api.getNilDeals(),
         ]);
 
         setCompany(companyData);
         setLoans(loansData);
         setStats(statsData);
         setCompanies(companiesData);
+        setNilDeals(nilDealsData);
 
-        // Load payments for all loans
         if (loansData.length > 0) {
           const allPayments = await Promise.all(
             loansData.map(loan => api.getLoanPayments(loan.id))
@@ -49,127 +70,111 @@ export default function ClientDashboard() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="text-center text-gray-500">Loading...</div>
+      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+        <p className="text-slate-400 text-sm tracking-widest uppercase">Loading</p>
       </div>
     );
   }
 
-  const formatCurrency = (val) => `$${(val || 0).toLocaleString()}`;
-
-  // Calculate payment breakdown totals
-  const totalPrincipal = payments.reduce((sum, p) => sum + p.principal_paid, 0);
-  const totalInterest = payments.reduce((sum, p) => sum + p.interest_paid, 0);
-  const totalNil = payments.reduce((sum, p) => sum + p.nil_contribution, 0);
-  const companyInterest = totalInterest - totalNil;
-
-  const paymentColumns = [
-    { key: 'payment_date', label: 'Date' },
-    { key: 'amount', label: 'Amount', render: (val) => formatCurrency(val) },
-    { key: 'principal_paid', label: 'Principal', render: (val) => formatCurrency(val) },
-    { key: 'interest_paid', label: 'Interest', render: (val) => formatCurrency(val) },
-    { key: 'nil_contribution', label: 'NIL Contribution', render: (val) => formatCurrency(val) },
-  ];
+  // Build NIL lookup by athlete_id
+  const nilDealByAthlete = nilDeals.reduce((acc, deal) => {
+    if (deal.status === 'active' && deal.amount > 0) {
+      acc[deal.athlete_id] = (acc[deal.athlete_id] || 0) + deal.amount;
+    }
+    return acc;
+  }, {});
 
   const loanColumns = [
-    { key: 'principal_amount', label: 'Principal', render: (val) => formatCurrency(val) },
+    { key: 'principal_amount', label: 'Principal', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>{fmt(val)}</span> },
     { key: 'interest_rate', label: 'Rate', render: (val) => `${val}%` },
     { key: 'start_date', label: 'Start Date' },
     { key: 'end_date', label: 'End Date' },
-    {
-      key: 'status',
-      label: 'Status',
-      render: (val) => (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          val === 'active' ? 'bg-green-100 text-green-800' :
-          val === 'paid' ? 'bg-blue-100 text-blue-800' :
-          'bg-red-100 text-red-800'
-        }`}>
-          {val}
-        </span>
-      )
-    },
+    { key: 'status', label: 'Status', render: (val) => <StatusBadge val={val} /> },
   ];
 
+  const paymentColumns = [
+    { key: 'payment_date', label: 'Date' },
+    { key: 'amount', label: 'Amount', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>{fmt(val)}</span> },
+    { key: 'principal_paid', label: 'Principal Paid', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>{fmt(val)}</span> },
+    { key: 'interest_paid', label: 'Interest Paid', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>{fmt(val)}</span> },
+    { key: 'nil_contribution', label: 'NIL Contribution', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace', color: '#c89200' }}>{fmt(val)}</span> },
+  ];
+
+  // athletes from company stats (all 22 GT players)
+  const athletes = stats?.athletes_funded || [];
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Company Selector */}
-      <div className="mb-6 flex items-center justify-between">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Header with company selector */}
+      <div className="flex items-start justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{company?.name}</h1>
-          <p className="text-gray-600">Client Portal</p>
+          <h1
+            className="text-3xl font-semibold"
+            style={{ color: '#003057', fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+          >
+            {company?.name}
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">Client Portal</p>
         </div>
-        <select
-          value={companyId}
-          onChange={(e) => window.location.href = `/client/${e.target.value}`}
-          className="border rounded-md px-3 py-2 text-sm"
-        >
-          {companies.map((c) => (
-            <option key={c.id} value={c.id}>{c.name}</option>
-          ))}
-        </select>
+        <div>
+          <label className="block text-xs text-slate-400 mb-1 uppercase tracking-wider">Company</label>
+          <select
+            value={companyId}
+            onChange={(e) => navigate(`/client/${e.target.value}`)}
+            className="border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 outline-none cursor-pointer bg-white"
+            style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
+            onFocus={e => e.target.style.borderColor = '#EAAA00'}
+            onBlur={e => e.target.style.borderColor = '#e2e8f0'}
+          >
+            {companies.map((c) => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      {/* 4 Stat Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard
           title="Total Borrowed"
-          value={formatCurrency(stats?.total_borrowed)}
-          color="blue"
+          value={fmt(stats?.total_borrowed)}
         />
         <StatCard
           title="Total Paid"
-          value={formatCurrency(stats?.total_paid)}
-          color="green"
+          value={fmt(stats?.total_paid)}
         />
         <StatCard
-          title="NIL Contributed"
-          value={formatCurrency(stats?.total_nil_contributed)}
-          subtitle="Supporting college athletes"
-          color="purple"
+          title="NIL Contributed (7%)"
+          value={fmt(stats?.total_nil_contributed)}
+          subtitle="Supporting GT athletes"
         />
         <StatCard
           title="Active Loans"
           value={stats?.active_loans || 0}
-          color="orange"
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Payment Breakdown Chart */}
-        <Card title="Payment Breakdown">
-          {payments.length > 0 ? (
-            <PaymentBreakdownChart
-              data={{
-                principal: totalPrincipal,
-                companyInterest: companyInterest,
-                nilContribution: totalNil,
-              }}
+      {/* GT Athletes Grid */}
+      <Card title="Georgia Tech Football Athletes" className="mb-8">
+        <p className="text-xs text-slate-400 mb-5">
+          22 GT football players supported through the NIL lending program
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {athletes.map((athlete) => (
+            <AthleteCard
+              key={athlete.id}
+              athlete={athlete}
+              nilAmount={nilDealByAthlete[athlete.id] || 0}
             />
-          ) : (
-            <p className="text-gray-500 text-center py-8">No payments yet</p>
-          )}
-        </Card>
+          ))}
+        </div>
+        {athletes.length === 0 && (
+          <p className="text-slate-400 text-center py-6 text-sm italic">No athlete data available</p>
+        )}
+      </Card>
 
-        {/* NIL Impact */}
-        <Card title="Your NIL Impact">
-          <p className="text-sm text-gray-600 mb-4">
-            Athletes supported by your NIL contributions:
-          </p>
-          <div className="space-y-3 max-h-[250px] overflow-y-auto">
-            {stats?.athletes_funded?.length > 0 ? (
-              stats.athletes_funded.map((athlete) => (
-                <AthleteCard key={athlete.id} athlete={athlete} amount={athlete.amount} />
-              ))
-            ) : (
-              <p className="text-gray-500 text-center py-4">No athletes funded yet</p>
-            )}
-          </div>
-        </Card>
-      </div>
-
-      {/* Loans Table */}
-      <Card title="Your Loans" className="mb-8">
+      {/* Loan Details */}
+      <Card title="Loan Details" className="mb-8">
         <Table columns={loanColumns} data={loans} />
       </Card>
 

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GT PIP Co — Design Spec</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; color: #1e293b; }
+
+  .topbar {
+    background: #003057;
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo { width: 32px; height: 32px; background: #EAAA00; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; color: #003057; flex-shrink: 0; }
+  .topbar-title { font-weight: 700; font-size: 15px; color: #fff; }
+  .topbar-badge { margin-left: auto; background: rgba(234,170,0,0.15); border: 1px solid #EAAA00; color: #EAAA00; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .spec-header { margin-bottom: 36px; }
+  .spec-header h1 { font-size: 26px; font-weight: 800; color: #003057; margin-bottom: 6px; }
+  .spec-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .spec-meta span { font-size: 12px; color: #64748b; background: #fff; border: 1px solid #e2e8f0; padding: 3px 10px; border-radius: 20px; }
+  .spec-meta .approved { background: #003057; color: #EAAA00; border-color: #003057; font-weight: 600; }
+
+  .toc { background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #EAAA00; border-radius: 8px; padding: 20px 24px; margin-bottom: 36px; }
+  .toc h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: #94a3b8; margin-bottom: 10px; }
+  .toc a { display: block; color: #003057; text-decoration: none; font-size: 13px; padding: 3px 0; font-weight: 500; }
+  .toc a:hover { color: #EAAA00; }
+
+  section { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 28px; margin-bottom: 24px; }
+  section h2 { font-size: 16px; font-weight: 800; color: #003057; border-bottom: 2px solid #EAAA00; padding-bottom: 10px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  section h3 { font-size: 13px; font-weight: 700; color: #003057; margin: 18px 0 8px; }
+  section p { font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 8px; }
+  section ul { padding-left: 20px; margin-bottom: 8px; }
+  section ul li { font-size: 13px; color: #475569; line-height: 1.8; }
+  section code { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1px 6px; font-size: 11px; color: #003057; font-family: 'SF Mono', monospace; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+  th { background: #003057; color: #EAAA00; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; color: #374151; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  pre { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 16px; font-size: 11px; font-family: 'SF Mono', monospace; overflow-x: auto; line-height: 1.6; margin: 10px 0; }
+  pre .comment { color: #64748b; }
+
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; }
+  .pill-navy { background: #003057; color: #EAAA00; }
+  .pill-gold { background: #EAAA00; color: #003057; }
+  .pill-gray { background: #e2e8f0; color: #475569; }
+
+  .color-swatches { display: flex; gap: 12px; margin: 10px 0; }
+  .swatch { width: 40px; height: 40px; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .swatch-label { font-size: 10px; color: #64748b; margin-top: 4px; text-align: center; }
+
+  .interest-split { display: flex; gap: 12px; margin: 12px 0; }
+  .split-card { flex: 1; border-radius: 8px; padding: 14px; text-align: center; }
+  .split-card .pct { font-size: 28px; font-weight: 800; }
+  .split-card .label { font-size: 11px; margin-top: 4px; opacity: 0.8; }
+  .split-card .desc { font-size: 10px; margin-top: 2px; opacity: 0.6; }
+
+  .athlete-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+  .athlete-row { display: flex; align-items: center; gap: 8px; background: #f8fafc; border-radius: 6px; padding: 8px; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: #003057; display: flex; align-items: center; justify-content: center; color: #EAAA00; font-weight: 800; font-size: 10px; flex-shrink: 0; }
+  .athlete-info .name { font-size: 11px; font-weight: 700; color: #1e293b; }
+  .athlete-info .meta { font-size: 9px; color: #64748b; }
+
+  .endpoint { background: #f8fafc; border-left: 3px solid #003057; border-radius: 0 6px 6px 0; padding: 8px 12px; margin: 6px 0; font-size: 12px; font-family: 'SF Mono', monospace; color: #003057; }
+  .endpoint.new { border-left-color: #16a34a; }
+  .endpoint.updated { border-left-color: #EAAA00; }
+  .endpoint.removed { border-left-color: #dc2626; text-decoration: line-through; color: #94a3b8; }
+  .endpoint-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
+  .endpoint-label.new { color: #16a34a; }
+  .endpoint-label.updated { color: #b45309; }
+  .endpoint-label.removed { color: #dc2626; }
+
+  .oos { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 16px; }
+  .oos li { color: #94a3b8; font-size: 13px; line-height: 2; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">GT</div>
+  <span class="topbar-title">Georgia Tech PIP Co</span>
+  <span class="topbar-badge">Design Spec — 2026-03-12</span>
+</div>
+
+<div class="container">
+
+  <div class="spec-header">
+    <h1>Dashboard Redesign Spec</h1>
+    <div class="spec-meta">
+      <span>Date: 2026-03-12</span>
+      <span>Project: NIL Lending Dashboard</span>
+      <span class="approved">✓ Approved</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h4>Contents</h4>
+    <a href="#branding">Branding & Visual Design</a>
+    <a href="#interest">Interest Rate Structure</a>
+    <a href="#data">Data Model Changes</a>
+    <a href="#seed">Seed Data</a>
+    <a href="#internal">Internal Dashboard</a>
+    <a href="#client">Client Portal</a>
+    <a href="#api">API Changes</a>
+    <a href="#oos">Out of Scope</a>
+  </div>
+
+  <!-- BRANDING -->
+  <section id="branding">
+    <h2>🎨 Branding & Visual Design</h2>
+    <ul>
+      <li><strong>Brand name:</strong> Georgia Tech PIP Co — "PIP" has no defined acronym, it is a brand name</li>
+      <li><strong>Logo:</strong> "GT" monogram in navy on gold background square</li>
+    </ul>
+    <h3>Color Palette</h3>
+    <div class="color-swatches">
+      <div><div class="swatch" style="background:#003057;"></div><div class="swatch-label">#003057<br>Navy</div></div>
+      <div><div class="swatch" style="background:#EAAA00;"></div><div class="swatch-label">#EAAA00<br>Gold</div></div>
+      <div><div class="swatch" style="background:#FFFFFF;border:1px solid #e2e8f0;"></div><div class="swatch-label">#FFFFFF<br>White</div></div>
+      <div><div class="swatch" style="background:#f1f5f9;"></div><div class="swatch-label">#f1f5f9<br>BG</div></div>
+    </div>
+    <ul style="margin-top:10px;">
+      <li><strong>Stat cards:</strong> All navy background, gold numbers, white/translucent labels — consistent across all tabs</li>
+      <li><strong>Tab indicator:</strong> Gold underline on active tab, navy bold text, gray for inactive</li>
+      <li><strong>Charts:</strong> Navy and gold alternating bars</li>
+    </ul>
+  </section>
+
+  <!-- INTEREST -->
+  <section id="interest">
+    <h2>💰 Interest Rate Structure</h2>
+    <p>All loans carry <strong>14% annual interest</strong>, split three ways:</p>
+    <div class="interest-split" style="margin-top:14px;">
+      <div class="split-card" style="background:#003057;">
+        <div class="pct" style="color:#EAAA00;">2%</div>
+        <div class="label" style="color:#fff;">PIP Co</div>
+        <div class="desc" style="color:rgba(255,255,255,0.6);">Platform fee</div>
+      </div>
+      <div class="split-card" style="background:#EAAA00;">
+        <div class="pct" style="color:#003057;">5%</div>
+        <div class="label" style="color:#003057;">Donors</div>
+        <div class="desc" style="color:rgba(0,48,87,0.7);">Return to GT donor</div>
+      </div>
+      <div class="split-card" style="background:#334155;">
+        <div class="pct" style="color:#e2e8f0;">7%</div>
+        <div class="label" style="color:#e2e8f0;">Players</div>
+        <div class="desc" style="color:rgba(255,255,255,0.6);">NIL funds for athletes</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA MODEL -->
+  <section id="data">
+    <h2>🗄️ Data Model Changes</h2>
+
+    <h3>loans table — updated fields</h3>
+    <ul>
+      <li><code>pip_portion</code> REAL DEFAULT 2.0 — replaces <code>company_portion</code></li>
+      <li><code>investor_portion</code> REAL DEFAULT 5.0 — new</li>
+      <li><code>nil_portion</code> REAL DEFAULT 7.0 — updated from 7.5</li>
+      <li><code>interest_rate</code> REAL DEFAULT 14.0 — updated from 15.0</li>
+    </ul>
+
+    <h3>payments table — new columns</h3>
+    <ul>
+      <li><code>pip_contribution</code> REAL DEFAULT 0</li>
+      <li><code>investor_contribution</code> REAL DEFAULT 0</li>
+      <li><code>nil_contribution</code> — retained</li>
+    </ul>
+
+    <h3>donors table — new</h3>
+    <pre>CREATE TABLE donors (
+  id              INTEGER PRIMARY KEY AUTOINCREMENT,
+  name            TEXT NOT NULL,
+  email           TEXT,
+  loan_id         INTEGER REFERENCES loans(id),
+  amount          REAL NOT NULL,
+  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP
+);<span class="comment">
+-- One donor per loan (1:1). Min investment $1,000,000.
+-- GT-only platform, no school_id needed.</span></pre>
+
+    <h3>athletes table — new columns</h3>
+    <ul>
+      <li><code>jersey_number</code> INTEGER</li>
+      <li><code>unit</code> TEXT CHECK(unit IN ('offense','defense'))</li>
+      <li><code>email</code> TEXT</li>
+    </ul>
+
+    <h3>Payment calculation</h3>
+    <pre>interest_paid         = amount - principal_paid
+nil_contribution      = interest_paid * (7 / 14)   <span class="comment">// 0.5 — 50%</span>
+investor_contribution = interest_paid * (5 / 14)   <span class="comment">// ~0.357 — 35.7%</span>
+pip_contribution      = interest_paid * (2 / 14)   <span class="comment">// ~0.143 — 14.3%</span></pre>
+  </section>
+
+  <!-- SEED DATA -->
+  <section id="seed">
+    <h2>🌱 Seed Data</h2>
+
+    <h3>School</h3>
+    <p>Georgia Tech — ACC — GA (only school)</p>
+
+    <h3>Companies (Borrowers)</h3>
+    <table>
+      <thead><tr><th>#</th><th>Name</th><th>Email</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Peachtree Sports Media</td><td>contact@peachtreesportsmedia.com</td></tr>
+        <tr><td>2</td><td>Victory Sports Management</td><td>finance@victorysportsmgmt.com</td></tr>
+        <tr><td>3</td><td>Atlanta Athlete Agency</td><td>info@atlantaathlete.com</td></tr>
+        <tr><td>4</td><td>Yellow Jacket Sports Group</td><td>ops@yellowjacketsports.com</td></tr>
+        <tr><td>5</td><td>Southfield Athletic Consulting</td><td>admin@southfieldathletic.com</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Donors (GT High Net-Worth Individuals)</h3>
+    <table>
+      <thead><tr><th>Name</th><th>Email</th><th>Amount</th><th>Loan</th></tr></thead>
+      <tbody>
+        <tr><td>Robert A. Griffin</td><td>rgriffin@gmail.com</td><td>$2,500,000</td><td>Peachtree Sports Media</td></tr>
+        <tr><td>James T. Crawford</td><td>jcrawford@crawfordventures.com</td><td>$1,500,000</td><td>Victory Sports Management</td></tr>
+        <tr><td>William H. Thompson</td><td>wthompson@thompsonindustries.com</td><td>$3,000,000</td><td>Atlanta Athlete Agency</td></tr>
+        <tr><td>Charles B. Morrison</td><td>cmorrison@morrisoncapital.com</td><td>$5,000,000</td><td>Yellow Jacket Sports Group</td></tr>
+        <tr><td>Edward L. Harrison</td><td>eharrison@harrisongroup.com</td><td>$8,000,000</td><td>Southfield Athletic Consulting</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Athletes — Offense (11)</h3>
+    <div class="athlete-grid">
+      <div class="athlete-row"><div class="avatar">MW</div><div class="athlete-info"><div class="name">Marcus Williams</div><div class="meta">QB · #12 · m.williams@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">JH</div><div class="athlete-info"><div class="name">Jordan Hayes</div><div class="meta">WR · #80 · j.hayes@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">DH</div><div class="athlete-info"><div class="name">Devon Harris</div><div class="meta">WR · #11 · d.harris@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">TB</div><div class="athlete-info"><div class="name">Tyler Brooks</div><div class="meta">RB · #28 · t.brooks@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">CF</div><div class="athlete-info"><div class="name">Cameron Foster</div><div class="meta">FB · #44 · c.foster@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">RM</div><div class="athlete-info"><div class="name">Ryan Mitchell</div><div class="meta">TE · #85 · r.mitchell@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">DL</div><div class="athlete-info"><div class="name">DeShawn Lee</div><div class="meta">LT · #72 · d.lee@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">MJ</div><div class="athlete-info"><div class="name">Malik Johnson</div><div class="meta">LG · #67 · m.johnson@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">CA</div><div class="athlete-info"><div class="name">Chris Anderson</div><div class="meta">C · #55 · c.anderson@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">BT</div><div class="athlete-info"><div class="name">Brandon Thomas</div><div class="meta">RG · #64 · b.thomas@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">DT</div><div class="athlete-info"><div class="name">Darius Thompson</div><div class="meta">RT · #75 · d.thompson@gatech.edu</div></div></div>
+    </div>
+
+    <h3>Athletes — Defense (11)</h3>
+    <div class="athlete-grid">
+      <div class="athlete-row"><div class="avatar">DC</div><div class="athlete-info"><div class="name">Deon Carter</div><div class="meta">DE · #90 · deon.carter@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">JW</div><div class="athlete-info"><div class="name">Jamal Williams</div><div class="meta">DT · #92 · jamal.williams@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">AR</div><div class="athlete-info"><div class="name">Andre Robinson</div><div class="meta">DT · #95 · a.robinson@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">MG</div><div class="athlete-info"><div class="name">Marcus Green</div><div class="meta">DE · #88 · m.green@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">ID</div><div class="athlete-info"><div class="name">Isaiah Davis</div><div class="meta">MLB · #54 · i.davis@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">TW</div><div class="athlete-info"><div class="name">Trevon Walker</div><div class="meta">OLB · #51 · t.walker@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">DS</div><div class="athlete-info"><div class="name">DeAndre Smith</div><div class="meta">OLB · #48 · deandre.smith@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">KJ</div><div class="athlete-info"><div class="name">Kevin Johnson</div><div class="meta">CB · #23 · k.johnson@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">NH</div><div class="athlete-info"><div class="name">Nathan Harris</div><div class="meta">CB · #31 · n.harris@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">EM</div><div class="athlete-info"><div class="name">Elijah Moore</div><div class="meta">FS · #20 · e.moore@gatech.edu</div></div></div>
+      <div class="athlete-row"><div class="avatar">DW</div><div class="athlete-info"><div class="name">Darren Washington</div><div class="meta">SS · #36 · d.washington@gatech.edu</div></div></div>
+    </div>
+  </section>
+
+  <!-- INTERNAL DASHBOARD -->
+  <section id="internal">
+    <h2>🖥️ Internal Dashboard</h2>
+
+    <h3>Navigation</h3>
+    <ul>
+      <li>Top nav: navy background, GT gold logo, "Georgia Tech PIP Co" in white</li>
+      <li>Links: "Internal" (active: gold border + gold text) · "Client Portal"</li>
+    </ul>
+
+    <h3>Tabs (5, all functional)</h3>
+    <div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin:10px 0 16px;">
+      <span style="border-bottom:3px solid #EAAA00;color:#003057;padding:6px 16px;font-size:12px;font-weight:700;margin-bottom:-2px;">Overview</span>
+      <span style="color:#94a3b8;padding:6px 16px;font-size:12px;">Loans</span>
+      <span style="color:#94a3b8;padding:6px 16px;font-size:12px;">NIL Deals</span>
+      <span style="color:#94a3b8;padding:6px 16px;font-size:12px;">Athletes</span>
+      <span style="color:#94a3b8;padding:6px 16px;font-size:12px;">Donors</span>
+    </div>
+
+    <h3>Overview — Stat Cards (6, all navy/gold)</h3>
+    <table>
+      <thead><tr><th>#</th><th>Card</th><th>Value Source</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Loans Outstanding</td><td>SUM(principal_amount) WHERE status='active'</td></tr>
+        <tr><td>2</td><td>PIP Co Revenue (2%)</td><td>SUM(pip_contribution) from payments</td></tr>
+        <tr><td>3</td><td>Donor Returns (5%)</td><td>SUM(investor_contribution) from payments</td></tr>
+        <tr><td>4</td><td>NIL Collected (7%)</td><td>SUM(nil_contribution) from payments</td></tr>
+        <tr><td>5</td><td>NIL Allocated</td><td>SUM(amount) from active nil_deals</td></tr>
+        <tr><td>6</td><td>NIL Available</td><td>NIL Collected − NIL Allocated</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Overview — Charts</h3>
+    <ul>
+      <li><strong>NIL by Position</strong> — horizontal bar, grouped by athlete position, navy/gold alternating → needs <code>GET /api/stats/nil-by-position</code></li>
+      <li><strong>Interest Split Breakdown</strong> — donut chart: 2% navy, 5% gold, 7% gray → static proportions, no endpoint needed</li>
+    </ul>
+
+    <h3>Donors Tab</h3>
+    <table>
+      <thead><tr><th>Column</th><th>Formula</th></tr></thead>
+      <tbody>
+        <tr><td>% of Fund</td><td>donor.amount / SUM(all donors.amount) × 100</td></tr>
+        <tr><td>5% Return</td><td>donor.amount × 0.05 (projected)</td></tr>
+        <tr><td>Total Return</td><td>donor.amount × 1.05 (projected)</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:8px;font-size:12px;color:#64748b;">No company/loan references shown on donor cards.</p>
+
+    <h3>Obsolete Components → Replace</h3>
+    <ul>
+      <li><code>NilBySportChart</code> → <code>NilByPositionChart</code> (horizontal bar)</li>
+      <li><code>NilBySchoolChart</code> → <code>InterestSplitChart</code> (donut)</li>
+    </ul>
+  </section>
+
+  <!-- CLIENT PORTAL -->
+  <section id="client">
+    <h2>📱 Client Portal</h2>
+    <ul>
+      <li>No tabs — single scrollable page per company</li>
+      <li>Company selector dropdown top right</li>
+      <li>4 stat cards (all navy/gold): Total Borrowed · Total Paid · NIL Contributed (7%) · Active Loans</li>
+      <li><strong>Athlete grid:</strong> All 22 GT athletes shown regardless of company — fixed promotional display, not filtered by company</li>
+      <li>Tables: Loan details · Payment history (Date, Amount, Principal, Interest, NIL Contribution)</li>
+    </ul>
+  </section>
+
+  <!-- API -->
+  <section id="api">
+    <h2>🔌 API Changes</h2>
+
+    <h3>New Endpoints</h3>
+    <div class="endpoint-label new">NEW</div>
+    <div class="endpoint new">GET /api/donors</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Returns: id, name, email, amount, pct_of_fund, projected_return (amount×1.05), returns_earned (SUM investor_contribution from their loan's payments)</p>
+
+    <div class="endpoint-label new">NEW</div>
+    <div class="endpoint new">GET /api/stats/donors</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Returns: total_invested, total_returns_earned, projected_total_return</p>
+
+    <div class="endpoint-label new">NEW</div>
+    <div class="endpoint new">GET /api/stats/nil-by-position</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Returns: SUM(nil_deals.amount) grouped by athlete position</p>
+
+    <h3>Updated Endpoints</h3>
+    <div class="endpoint-label updated">UPDATED</div>
+    <div class="endpoint updated">GET /api/loans</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Add donor_display_name (join donors, format "F. Lastname")</p>
+
+    <div class="endpoint-label updated">UPDATED</div>
+    <div class="endpoint updated">GET /api/stats/portfolio</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Add pip_revenue, donor_returns; update NIL to 7% split</p>
+
+    <div class="endpoint-label updated">UPDATED</div>
+    <div class="endpoint updated">GET /api/stats/company/:id</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Update NIL contribution calc to 7%</p>
+
+    <div class="endpoint-label updated">UPDATED</div>
+    <div class="endpoint updated">POST /api/loans</div>
+    <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Accept pip_portion (default 2), investor_portion (default 5), nil_portion (default 7)</p>
+
+    <h3>Removed Endpoints</h3>
+    <div class="endpoint-label removed">REMOVED</div>
+    <div class="endpoint removed">GET /api/stats/nil-by-sport</div>
+    <div class="endpoint-label removed" style="margin-top:6px;">REMOVED</div>
+    <div class="endpoint removed">GET /api/stats/nil-by-school</div>
+  </section>
+
+  <!-- OUT OF SCOPE -->
+  <section id="oos">
+    <h2>⏸️ Out of Scope (Deferred)</h2>
+    <div class="oos">
+      <ul>
+        <li>Authentication / login</li>
+        <li>Loan origination workflow (create new loans from UI)</li>
+        <li>Export / reporting</li>
+        <li>Real-time data / websockets</li>
+        <li>GET /api/donors/:id — single-donor detail view</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

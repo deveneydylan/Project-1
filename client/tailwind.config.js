@@ -7,14 +7,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-        }
-      }
+        navy: {
+          DEFAULT: '#003057',
+          light: '#0a4070',
+          dark: '#001f3d',
+          50: '#e6eef5',
+        },
+        gold: {
+          DEFAULT: '#EAAA00',
+          light: '#f5c842',
+          dark: '#c89200',
+          50: '#fdf6d9',
+        },
+      },
+      fontFamily: {
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        body: ['DM Sans', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+      },
     },
   },
   plugins: [],

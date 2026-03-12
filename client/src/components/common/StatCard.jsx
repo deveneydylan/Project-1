@@ -1,28 +1,34 @@
-export default function StatCard({ title, value, subtitle, icon, color = 'blue' }) {
-  const colors = {
-    blue: 'bg-blue-100 text-blue-600',
-    green: 'bg-green-100 text-green-600',
-    purple: 'bg-purple-100 text-purple-600',
-    orange: 'bg-orange-100 text-orange-600',
-    red: 'bg-red-100 text-red-600',
-  };
-
+export default function StatCard({ title, value, subtitle }) {
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
-          {subtitle && (
-            <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
-          )}
-        </div>
-        {icon && (
-          <div className={`p-3 rounded-full ${colors[color]}`}>
-            {icon}
-          </div>
-        )}
-      </div>
+    <div
+      className="rounded-xl p-6 shadow-lg relative overflow-hidden"
+      style={{ backgroundColor: '#003057' }}
+    >
+      {/* Subtle decorative accent */}
+      <div
+        className="absolute top-0 right-0 w-24 h-24 rounded-full opacity-5"
+        style={{ backgroundColor: '#EAAA00', transform: 'translate(30%, -30%)' }}
+      />
+      <p
+        className="text-xs font-medium uppercase tracking-widest mb-3"
+        style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'DM Sans, system-ui, sans-serif' }}
+      >
+        {title}
+      </p>
+      <p
+        className="text-3xl font-semibold leading-none"
+        style={{ color: '#EAAA00', fontFamily: 'JetBrains Mono, Courier New, monospace' }}
+      >
+        {value}
+      </p>
+      {subtitle && (
+        <p
+          className="text-xs mt-3"
+          style={{ color: 'rgba(255,255,255,0.35)' }}
+        >
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }

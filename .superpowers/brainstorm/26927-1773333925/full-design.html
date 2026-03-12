@@ -1,0 +1,305 @@
+<h2>Full Dashboard Design — Georgia Tech PIP Co</h2>
+<p class="subtitle">Complete layout across both views. Review each section and let me know in the terminal.</p>
+
+<!-- INTERNAL DASHBOARD -->
+<div class="section">
+  <h3 style="color:#003057;margin-bottom:12px;">Internal Dashboard — 5 Tabs</h3>
+
+  <div class="mockup">
+    <div class="mockup-header">Overview Tab</div>
+    <div class="mockup-body" style="padding:0;background:#f1f5f9;font-family:'Segoe UI',sans-serif;font-size:12px;">
+
+      <div style="background:#003057;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height:52px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:28px;height:28px;background:#EAAA00;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:#003057;">GT</div>
+          <span style="font-weight:700;font-size:13px;color:#fff;">Georgia Tech PIP Co</span>
+        </div>
+        <div style="display:flex;gap:4px;">
+          <span style="background:rgba(234,170,0,0.15);border:1px solid #EAAA00;color:#EAAA00;padding:4px 10px;border-radius:5px;font-size:10px;font-weight:600;">Internal</span>
+          <span style="color:rgba(255,255,255,0.5);padding:4px 10px;font-size:10px;">Client Portal</span>
+        </div>
+      </div>
+
+      <div style="padding:16px;">
+        <div style="font-weight:700;font-size:15px;color:#003057;margin-bottom:2px;">Internal Dashboard</div>
+        <div style="font-size:10px;color:#64748b;margin-bottom:12px;">Portfolio & NIL Management</div>
+
+        <div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:14px;">
+          <span style="border-bottom:3px solid #EAAA00;color:#003057;padding:6px 14px;font-size:10px;font-weight:700;margin-bottom:-2px;">Overview</span>
+          <span style="color:#94a3b8;padding:6px 14px;font-size:10px;">Loans</span>
+          <span style="color:#94a3b8;padding:6px 14px;font-size:10px;">NIL Deals</span>
+          <span style="color:#94a3b8;padding:6px 14px;font-size:10px;">Athletes</span>
+          <span style="color:#94a3b8;padding:6px 14px;font-size:10px;">Donors</span>
+        </div>
+
+        <!-- Stats - all navy -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Loans Outstanding</div>
+            <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$41,000,000</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);">5 active loans</div>
+          </div>
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">PIP Co Revenue (2%)</div>
+            <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$203,571</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);">Platform earnings</div>
+          </div>
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Donor Returns (5%)</div>
+            <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$508,928</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);">Paid to investors</div>
+          </div>
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">NIL Collected (7%)</div>
+            <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$712,500</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);">22 active deals</div>
+          </div>
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">NIL Allocated</div>
+            <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$625,000</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);">Deployed to athletes</div>
+          </div>
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">NIL Available</div>
+            <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$87,500</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);">Ready to allocate</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;">
+            <div style="font-weight:700;font-size:11px;color:#003057;margin-bottom:10px;">NIL by Position</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;align-items:center;gap:6px;font-size:9px;">
+                <span style="width:68px;color:#64748b;text-align:right;">Quarterback</span>
+                <div style="flex:1;background:#e2e8f0;border-radius:3px;height:13px;"><div style="background:#003057;width:65%;height:13px;border-radius:3px;"></div></div>
+                <span style="width:40px;color:#003057;font-weight:600;">$150K</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:9px;">
+                <span style="width:68px;color:#64748b;text-align:right;">Wide Receiver</span>
+                <div style="flex:1;background:#e2e8f0;border-radius:3px;height:13px;"><div style="background:#EAAA00;width:75%;height:13px;border-radius:3px;"></div></div>
+                <span style="width:40px;color:#003057;font-weight:600;">$175K</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:9px;">
+                <span style="width:68px;color:#64748b;text-align:right;">Linebacker</span>
+                <div style="flex:1;background:#e2e8f0;border-radius:3px;height:13px;"><div style="background:#003057;width:85%;height:13px;border-radius:3px;"></div></div>
+                <span style="width:40px;color:#003057;font-weight:600;">$200K</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:9px;">
+                <span style="width:68px;color:#64748b;text-align:right;">Running Back</span>
+                <div style="flex:1;background:#e2e8f0;border-radius:3px;height:13px;"><div style="background:#EAAA00;width:55%;height:13px;border-radius:3px;"></div></div>
+                <span style="width:40px;color:#003057;font-weight:600;">$150K</span>
+              </div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;">
+            <div style="font-weight:700;font-size:11px;color:#003057;margin-bottom:10px;">Interest Split Breakdown</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:14px;">
+              <div style="width:70px;height:70px;border-radius:50%;background:conic-gradient(#003057 0% 14%, #EAAA00 14% 50%, #94a3b8 50% 100%);"></div>
+              <div style="font-size:9px;display:flex;flex-direction:column;gap:5px;">
+                <div style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:10px;height:10px;background:#003057;border-radius:2px;"></span><span>PIP Co 2%</span></div>
+                <div style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:10px;height:10px;background:#EAAA00;border-radius:2px;"></span><span>Donors 5%</span></div>
+                <div style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:10px;height:10px;background:#94a3b8;border-radius:2px;"></span><span>Players 7%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent tables -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;">
+            <div style="font-weight:700;font-size:11px;color:#003057;margin-bottom:8px;">Recent Loans</div>
+            <table style="width:100%;font-size:9px;border-collapse:collapse;">
+              <thead><tr style="color:#94a3b8;border-bottom:1px solid #f1f5f9;">
+                <th style="text-align:left;padding:3px 5px;">Company</th><th style="text-align:left;padding:3px 5px;">Amount</th><th style="text-align:left;padding:3px 5px;">Donor</th>
+              </tr></thead>
+              <tbody>
+                <tr><td style="padding:4px 5px;font-weight:500;">Peachtree Sports Media</td><td style="padding:4px 5px;">$2.5M</td><td style="padding:4px 5px;color:#64748b;">R. Griffin</td></tr>
+                <tr><td style="padding:4px 5px;font-weight:500;">Victory Sports Mgmt</td><td style="padding:4px 5px;">$1.5M</td><td style="padding:4px 5px;color:#64748b;">J. Crawford</td></tr>
+                <tr><td style="padding:4px 5px;font-weight:500;">Atlanta Athlete Agency</td><td style="padding:4px 5px;">$3M</td><td style="padding:4px 5px;color:#64748b;">W. Thompson</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;">
+            <div style="font-weight:700;font-size:11px;color:#003057;margin-bottom:8px;">Recent NIL Deals</div>
+            <table style="width:100%;font-size:9px;border-collapse:collapse;">
+              <thead><tr style="color:#94a3b8;border-bottom:1px solid #f1f5f9;">
+                <th style="text-align:left;padding:3px 5px;">Athlete</th><th style="text-align:left;padding:3px 5px;">Position</th><th style="text-align:left;padding:3px 5px;">Amount</th>
+              </tr></thead>
+              <tbody>
+                <tr><td style="padding:4px 5px;font-weight:500;">Marcus Williams</td><td style="padding:4px 5px;color:#64748b;">QB</td><td style="padding:4px 5px;font-weight:600;color:#003057;">$150K</td></tr>
+                <tr><td style="padding:4px 5px;font-weight:500;">Deon Carter</td><td style="padding:4px 5px;color:#64748b;">LB</td><td style="padding:4px 5px;font-weight:600;color:#003057;">$200K</td></tr>
+                <tr><td style="padding:4px 5px;font-weight:500;">Jordan Hayes</td><td style="padding:4px 5px;color:#64748b;">WR</td><td style="padding:4px 5px;font-weight:600;color:#003057;">$175K</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DONORS TAB -->
+<div class="section">
+  <div class="mockup">
+    <div class="mockup-header">Donors Tab</div>
+    <div class="mockup-body" style="padding:16px;background:#f1f5f9;font-family:'Segoe UI',sans-serif;font-size:12px;">
+      <div style="font-weight:700;font-size:13px;color:#003057;margin-bottom:2px;">Georgia Tech Donors</div>
+      <div style="font-size:10px;color:#64748b;margin-bottom:14px;">High net-worth investors funding athlete NIL loans</div>
+
+      <!-- Donor summary stats -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+        <div style="background:#003057;border-radius:8px;padding:12px;">
+          <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Total Invested</div>
+          <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$41,000,000</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.45);">5 donors</div>
+        </div>
+        <div style="background:#003057;border-radius:8px;padding:12px;">
+          <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Total Returns Earned</div>
+          <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$508,928</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.45);">5% interest paid out</div>
+        </div>
+        <div style="background:#003057;border-radius:8px;padding:12px;">
+          <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Projected Total Return</div>
+          <div style="font-size:18px;font-weight:800;color:#EAAA00;margin:5px 0 2px;">$43,050,000</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.45);">Principal + 5%</div>
+        </div>
+      </div>
+
+      <!-- Donor cards -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;align-items:center;gap:10px;">
+          <div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">Robert A. Griffin</div>
+            <div style="font-size:9px;color:#64748b;margin-top:2px;">Loan: Peachtree Sports Media</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">Invested</div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">$2,500,000</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">% of Fund</div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">6.1%</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">5% Return</div>
+            <div style="font-weight:700;font-size:12px;color:#EAAA00;">+$125,000</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">Total Return</div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">$2,625,000</div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;align-items:center;gap:10px;">
+          <div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">James T. Crawford</div>
+            <div style="font-size:9px;color:#64748b;margin-top:2px;">Loan: Victory Sports Mgmt</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">Invested</div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">$1,500,000</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">% of Fund</div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">3.7%</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">5% Return</div>
+            <div style="font-weight:700;font-size:12px;color:#EAAA00;">+$75,000</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">Total Return</div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">$1,575,000</div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;align-items:center;gap:10px;opacity:0.7;">
+          <div>
+            <div style="font-weight:700;font-size:12px;color:#003057;">William H. Thompson</div>
+            <div style="font-size:9px;color:#64748b;margin-top:2px;">Loan: Atlanta Athlete Agency</div>
+          </div>
+          <div><div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">Invested</div><div style="font-weight:700;font-size:12px;color:#003057;">$3,000,000</div></div>
+          <div><div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">% of Fund</div><div style="font-weight:700;font-size:12px;color:#003057;">7.3%</div></div>
+          <div><div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">5% Return</div><div style="font-weight:700;font-size:12px;color:#EAAA00;">+$150,000</div></div>
+          <div><div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;">Total Return</div><div style="font-weight:700;font-size:12px;color:#003057;">$3,150,000</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT PORTAL -->
+<div class="section">
+  <div class="mockup">
+    <div class="mockup-header">Client Portal — Borrower View</div>
+    <div class="mockup-body" style="padding:0;background:#f1f5f9;font-family:'Segoe UI',sans-serif;font-size:12px;">
+      <div style="background:#003057;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height:52px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:28px;height:28px;background:#EAAA00;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:#003057;">GT</div>
+          <span style="font-weight:700;font-size:13px;color:#fff;">Georgia Tech PIP Co</span>
+        </div>
+        <div style="display:flex;gap:4px;">
+          <span style="color:rgba(255,255,255,0.5);padding:4px 10px;font-size:10px;">Internal</span>
+          <span style="background:rgba(234,170,0,0.15);border:1px solid #EAAA00;color:#EAAA00;padding:4px 10px;border-radius:5px;font-size:10px;font-weight:600;">Client Portal</span>
+        </div>
+      </div>
+      <div style="padding:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+          <div>
+            <div style="font-weight:700;font-size:15px;color:#003057;">Peachtree Sports Media</div>
+            <div style="font-size:10px;color:#64748b;">Atlanta, GA · Sports Media</div>
+          </div>
+          <select style="border:1px solid #e2e8f0;border-radius:6px;padding:4px 8px;font-size:10px;color:#374151;background:#fff;">
+            <option>Peachtree Sports Media ▾</option>
+          </select>
+        </div>
+
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Total Borrowed</div>
+            <div style="font-size:16px;font-weight:800;color:#EAAA00;margin:4px 0 2px;">$2,500,000</div>
+          </div>
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Total Paid</div>
+            <div style="font-size:16px;font-weight:800;color:#EAAA00;margin:4px 0 2px;">$350,000</div>
+          </div>
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">NIL Contributed (7%)</div>
+            <div style="font-size:16px;font-weight:800;color:#EAAA00;margin:4px 0 2px;">$175,000</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);">Supporting GT athletes</div>
+          </div>
+          <div style="background:#003057;border-radius:8px;padding:12px;">
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Active Loans</div>
+            <div style="font-size:16px;font-weight:800;color:#EAAA00;margin:4px 0 2px;">1</div>
+          </div>
+        </div>
+
+        <!-- Athletes grid -->
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;">
+          <div style="font-weight:700;font-size:11px;color:#003057;margin-bottom:10px;">GT Football Roster — NIL Recipients</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px;display:flex;align-items:center;gap:8px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:#003057;display:flex;align-items:center;justify-content:center;color:#EAAA00;font-weight:800;font-size:11px;flex-shrink:0;">MW</div>
+              <div><div style="font-weight:600;font-size:10px;color:#1e293b;">Marcus Williams</div><div style="font-size:9px;color:#64748b;">QB · #12</div><div style="font-size:9px;color:#EAAA00;font-weight:600;">$150K deal</div></div>
+            </div>
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px;display:flex;align-items:center;gap:8px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:#003057;display:flex;align-items:center;justify-content:center;color:#EAAA00;font-weight:800;font-size:11px;flex-shrink:0;">JH</div>
+              <div><div style="font-weight:600;font-size:10px;color:#1e293b;">Jordan Hayes</div><div style="font-size:9px;color:#64748b;">WR · #80</div><div style="font-size:9px;color:#EAAA00;font-weight:600;">$175K deal</div></div>
+            </div>
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px;display:flex;align-items:center;gap:8px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:#003057;display:flex;align-items:center;justify-content:center;color:#EAAA00;font-weight:800;font-size:11px;flex-shrink:0;">DC</div>
+              <div><div style="font-weight:600;font-size:10px;color:#1e293b;">Deon Carter</div><div style="font-size:9px;color:#64748b;">LB · #45</div><div style="font-size:9px;color:#EAAA00;font-weight:600;">$200K deal</div></div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:8px;font-size:9px;color:#94a3b8;">+ 19 more athletes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;">
+  <p style="margin:0 0 4px;font-size:13px;color:#003057;font-weight:700;">Does this design look right?</p>
+  <p style="margin:0;font-size:11px;color:#64748b;">Reply in the terminal — any changes before I write the spec and build the plan?</p>
+</div>

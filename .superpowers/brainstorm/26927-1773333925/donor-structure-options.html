@@ -1,0 +1,85 @@
+<h2>How Should Donors Be Structured?</h2>
+<p class="subtitle">Three approaches for where and how donor info lives in the dashboard. Click your preference.</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Dedicated Donors Tab (5th tab)</h3>
+      <p>Donors get their own tab in the Internal Dashboard alongside Overview, Loans, NIL Deals, Athletes. Full investor-style view: each donor card shows name, amount invested, % of total fund, projected return (5% + principal), and which loan they're tied to.</p>
+      <div style="margin-top:10px;background:#f8fafc;border-radius:6px;padding:10px;">
+        <div style="font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Preview — Donors Tab</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="background:#003057;border-radius:6px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#fff;">Robert A. Griffin</div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.6);">Loan: Peachtree Sports Media · $2,500,000</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:13px;font-weight:800;color:#EAAA00;">$2,625,000</div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.5);">return (5% + principal)</div>
+            </div>
+          </div>
+          <div style="background:#003057;border-radius:6px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#fff;">James T. Crawford</div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.6);">Loan: Victory Sports Mgmt · $1,500,000</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:13px;font-weight:800;color:#EAAA00;">$1,575,000</div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.5);">return (5% + principal)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Clean separation</li><li>Easy to scan all donors at once</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>One more tab to navigate</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Donors Inline Within Loans Tab</h3>
+      <p>No separate tab. Each loan row in the Loans tab expands to show the donor who funded it — name, amount, % share, and projected return. Donors are always seen in context of the loan they funded.</p>
+      <div style="margin-top:10px;background:#f8fafc;border-radius:6px;padding:10px;">
+        <div style="font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Preview — Loan Row Expanded</div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden;">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:7px 10px;font-size:10px;color:#1e293b;font-weight:600;border-bottom:1px solid #e2e8f0;">
+            <span>Peachtree Sports Media</span><span>$2,500,000</span><span>14%</span><span style="color:#16a34a;">active</span>
+          </div>
+          <div style="background:#f8fafc;padding:8px 10px 8px 24px;border-left:3px solid #EAAA00;">
+            <div style="font-size:9px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Funded by</div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;">
+              <span style="color:#003057;font-weight:700;">Robert A. Griffin</span>
+              <span style="color:#64748b;">Invested: $2,500,000</span>
+              <span style="color:#EAAA00;font-weight:700;">Return: $2,625,000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Donor always in context</li><li>Fewer tabs</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Harder to see all donors at a glance</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Both — Donors Tab + Inline on Loans</h3>
+      <p>Donors get their own tab for a full portfolio overview, AND each loan in the Loans tab shows its donor inline. Best of both worlds — you can browse donors independently or see them in context.</p>
+      <div style="margin-top:8px;">
+        <div class="pros-cons">
+          <div class="pros"><h4>Pros</h4><ul><li>Most complete view</li><li>Flexible navigation</li></ul></div>
+          <div class="cons"><h4>Cons</h4><ul><li>More to build</li><li>Some info duplicated</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

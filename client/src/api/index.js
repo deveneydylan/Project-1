@@ -18,6 +18,10 @@ async function fetchJson(url, options = {}) {
 export const getCompanies = () => fetchJson('/companies');
 export const getCompany = (id) => fetchJson(`/companies/${id}`);
 
+// Donors
+export const getDonors = () => fetchJson('/donors');
+export const getDonorStats = () => fetchJson('/stats/donors');
+
 // Loans
 export const getLoans = () => fetchJson('/loans');
 export const getLoan = (id) => fetchJson(`/loans/${id}`);
@@ -52,5 +56,4 @@ export const getSchools = () => fetchJson('/schools');
 // Stats
 export const getPortfolioStats = () => fetchJson('/stats/portfolio');
 export const getCompanyStats = (companyId) => fetchJson(`/stats/company/${companyId}`);
-export const getNilBySport = () => fetchJson('/stats/nil-by-sport');
-export const getNilBySchool = () => fetchJson('/stats/nil-by-school');
+export const getNilByPosition = () => fetchJson('/stats/nil-by-position');
