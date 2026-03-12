@@ -20,9 +20,12 @@ CREATE TABLE IF NOT EXISTS companies (
 CREATE TABLE IF NOT EXISTS athletes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
+    email TEXT,
     school_id INTEGER REFERENCES schools(id),
     sport TEXT NOT NULL,
     position TEXT,
+    unit TEXT CHECK(unit IN ('offense', 'defense')),
+    jersey_number INTEGER,
     social_followers INTEGER DEFAULT 0,
     profile_image_url TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -33,12 +36,23 @@ CREATE TABLE IF NOT EXISTS loans (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     company_id INTEGER REFERENCES companies(id),
     principal_amount REAL NOT NULL,
-    interest_rate REAL NOT NULL DEFAULT 15.0,
-    company_portion REAL NOT NULL DEFAULT 7.5,
-    nil_portion REAL NOT NULL DEFAULT 7.5,
+    interest_rate REAL NOT NULL DEFAULT 14.0,
+    pip_portion REAL NOT NULL DEFAULT 2.0,
+    investor_portion REAL NOT NULL DEFAULT 5.0,
+    nil_portion REAL NOT NULL DEFAULT 7.0,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     status TEXT DEFAULT 'active' CHECK(status IN ('active', 'paid', 'defaulted')),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Donors table (one donor per loan)
+CREATE TABLE IF NOT EXISTS donors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT,
+    loan_id INTEGER REFERENCES loans(id),
+    amount REAL NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -51,6 +65,8 @@ CREATE TABLE IF NOT EXISTS payments (
     principal_paid REAL DEFAULT 0,
     interest_paid REAL DEFAULT 0,
     nil_contribution REAL DEFAULT 0,
+    pip_contribution REAL DEFAULT 0,
+    investor_contribution REAL DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -67,10 +83,11 @@ CREATE TABLE IF NOT EXISTS nil_deals (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Indexes for performance
+-- Indexes
 CREATE INDEX IF NOT EXISTS idx_loans_company ON loans(company_id);
 CREATE INDEX IF NOT EXISTS idx_loans_status ON loans(status);
 CREATE INDEX IF NOT EXISTS idx_payments_loan ON payments(loan_id);
 CREATE INDEX IF NOT EXISTS idx_athletes_school ON athletes(school_id);
 CREATE INDEX IF NOT EXISTS idx_nil_deals_athlete ON nil_deals(athlete_id);
 CREATE INDEX IF NOT EXISTS idx_nil_deals_loan ON nil_deals(loan_id);
+CREATE INDEX IF NOT EXISTS idx_donors_loan ON donors(loan_id);
