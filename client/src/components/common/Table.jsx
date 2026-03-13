@@ -1,35 +1,23 @@
 export default function Table({ columns, data, onRowClick }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full">
+    <div className="metal-table-wrap">
+      <table className="metal-table">
         <thead>
-          <tr style={{ backgroundColor: '#003057' }}>
+          <tr>
             {columns.map((col) => (
-              <th
-                key={col.key}
-                className="px-5 py-3 text-left text-xs font-medium uppercase tracking-wider"
-                style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'DM Sans, system-ui, sans-serif' }}
-              >
-                {col.label}
-              </th>
+              <th key={col.key}>{col.label}</th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody>
           {data.map((row, idx) => (
             <tr
               key={row.id || idx}
               onClick={() => onRowClick?.(row)}
-              className={`transition-colors duration-100 ${onRowClick ? 'cursor-pointer' : ''}`}
-              style={{ backgroundColor: idx % 2 === 0 ? '#ffffff' : '#f8fafc' }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = '#f0f4f8'}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = idx % 2 === 0 ? '#ffffff' : '#f8fafc'}
+              className={onRowClick ? 'cursor-pointer' : ''}
             >
               {columns.map((col) => (
-                <td
-                  key={col.key}
-                  className="px-5 py-3.5 whitespace-nowrap text-sm text-slate-800"
-                >
+                <td key={col.key}>
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
                 </td>
               ))}
@@ -38,7 +26,9 @@ export default function Table({ columns, data, onRowClick }) {
         </tbody>
       </table>
       {data.length === 0 && (
-        <div className="text-center py-10 text-slate-400 text-sm italic">No data available</div>
+        <div className="text-center py-10 text-sm italic" style={{ color: 'rgba(100,135,175,0.6)' }}>
+          No data available
+        </div>
       )}
     </div>
   );

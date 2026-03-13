@@ -301,7 +301,7 @@ app.get('/api/stats/company/:id', (req, res) => {
     `, [companyId])?.value || 0,
 
     total_paid: queryOne(`
-      SELECT COALESCE(SUM(p.amount), 0) as value
+      SELECT COALESCE(SUM(p.principal_paid + p.interest_paid), 0) as value
       FROM payments p
       JOIN loans l ON p.loan_id = l.id
       WHERE l.company_id = ?

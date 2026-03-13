@@ -11,8 +11,8 @@
 
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
-  background-color: #f1f5f9;
-  color: #1e293b;
+  background-color: #010d1a;
+  color: rgba(190, 210, 230, 0.9);
 }
 
 ::-webkit-scrollbar {
@@ -20,7 +20,7 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #010d1a;
 }
 ::-webkit-scrollbar-thumb {
   background: #003057;
@@ -28,4 +28,451 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #EAAA00;
+}
+
+/* ─── Liquid Metallic Nav Tabs ─────────────────────────────────────────────── */
+
+.metal-tab {
+  position: relative;
+  padding: 5px 16px;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  color: #1a1a1a;
+
+  /* Polished silver chrome — multi-stop, 300% wide for hover sweep */
+  background: linear-gradient(
+    108deg,
+    #555 0%,
+    #a0a0a0 12%,
+    #d8d8d8 22%,
+    #f4f4f4 30%,
+    #ffffff 36%,
+    #f0f0f0 41%,
+    #cccccc 52%,
+    #8e8e8e 63%,
+    #a8a8a8 72%,
+    #d4d4d4 82%,
+    #f8f8f8 91%,
+    #e0e0e0 100%
+  );
+  background-size: 300% 100%;
+  background-position: 0% center;
+
+  /* Dimensional depth */
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.25) inset,
+    0 2px 6px rgba(0, 0, 0, 0.55),
+    0 1px 2px rgba(0, 0, 0, 0.4);
+
+  transition:
+    background-position 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s ease,
+    transform 0.15s ease;
+}
+
+.metal-tab:hover {
+  background-position: 100% center;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.2) inset,
+    0 3px 10px rgba(0, 0, 0, 0.55),
+    0 1px 3px rgba(0, 0, 0, 0.35);
+  transform: translateY(-0.5px);
+}
+
+.metal-tab:active {
+  transform: translateY(0.5px);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.15) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.3) inset,
+    0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Active state — liquid gold chrome */
+.metal-tab-active {
+  color: #2a1a00;
+  background: linear-gradient(
+    108deg,
+    #6b4a00 0%,
+    #b88000 12%,
+    #ddb030 22%,
+    #f5d058 30%,
+    #fff4a8 36%,
+    #fde84a 41%,
+    #d4a800 52%,
+    #9a7200 63%,
+    #c09000 72%,
+    #e0c040 82%,
+    #fff2a0 91%,
+    #e8c840 100%
+  );
+  background-size: 300% 100%;
+  background-position: 0% center;
+
+  border: 1px solid rgba(255, 220, 80, 0.35);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 200, 0.6) inset,
+    0 -1px 0 rgba(120, 70, 0, 0.35) inset,
+    0 2px 8px rgba(234, 170, 0, 0.55),
+    0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.metal-tab-active:hover {
+  background-position: 100% center;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 200, 0.7) inset,
+    0 -1px 0 rgba(120, 70, 0, 0.25) inset,
+    0 3px 14px rgba(234, 170, 0, 0.65),
+    0 1px 3px rgba(0, 0, 0, 0.35);
+  transform: translateY(-0.5px);
+}
+
+/* button reset for metal-tab when used on <button> elements */
+button.metal-tab {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────────────────── */
+
+@keyframes metal-title-shimmer {
+  0%, 100% { background-position: 0% center; }
+  50%       { background-position: 100% center; }
+}
+
+@keyframes metal-stat-glow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.08); }
+}
+
+/* ─── Typography ───────────────────────────────────────────────────────────── */
+
+.metal-page-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: 0.01em;
+  background: linear-gradient(135deg, #c89200 0%, #e8c040 25%, #fff4a8 48%, #e8c040 72%, #c89200 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: metal-title-shimmer 5s ease-in-out infinite;
+}
+
+.metal-page-subtitle {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.75rem;
+  color: rgba(120, 150, 185, 0.65);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.metal-section-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  background: linear-gradient(135deg, #7a90a8 0%, #b8ccd8 30%, #e0eaf2 50%, #b8ccd8 70%, #7a90a8 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Cards ────────────────────────────────────────────────────────────────── */
+
+.metal-card {
+  background: linear-gradient(145deg, #0f1f35 0%, #0b1828 50%, #080f1e 100%);
+  border-radius: 0.875rem;
+  border-top:    1px solid rgba(180, 205, 235, 0.18);
+  border-left:   1px solid rgba(150, 180, 215, 0.10);
+  border-right:  1px solid rgba(50,  75,  110, 0.10);
+  border-bottom: 1px solid rgba(30,  55,  90,  0.14);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(200, 225, 255, 0.04) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.25) inset;
+  overflow: hidden;
+}
+
+.metal-card-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(100, 135, 175, 0.10);
+  background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, transparent 100%);
+}
+
+/* ─── Stat Cards ───────────────────────────────────────────────────────────── */
+
+.metal-stat-card {
+  position: relative;
+  border-radius: 0.875rem;
+  padding: 1.5rem;
+  overflow: hidden;
+  background: linear-gradient(145deg, #0f2035 0%, #0a1828 40%, #071020 100%);
+  border-top:    1px solid rgba(180, 205, 235, 0.20);
+  border-left:   1px solid rgba(150, 180, 215, 0.12);
+  border-right:  1px solid rgba(50,  75,  110, 0.08);
+  border-bottom: 1px solid rgba(30,  55,  90,  0.14);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(200, 225, 255, 0.05) inset;
+}
+
+.metal-stat-card::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(234,170,0,0.13) 0%, transparent 70%);
+  pointer-events: none;
+  animation: metal-stat-glow 4s ease-in-out infinite;
+}
+
+.metal-stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(234,170,0,0.18), transparent);
+}
+
+.metal-stat-label {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(130, 158, 192, 0.65);
+  margin-bottom: 0.75rem;
+}
+
+.metal-stat-value {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1;
+  background: linear-gradient(135deg, #c89200 0%, #e8c040 28%, #fff4a8 48%, #e8c040 68%, #c89200 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: metal-title-shimmer 6s ease-in-out infinite;
+}
+
+.metal-stat-subtitle {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.75rem;
+  color: rgba(110, 140, 175, 0.55);
+  margin-top: 0.75rem;
+}
+
+/* ─── Table ────────────────────────────────────────────────────────────────── */
+
+.metal-table-wrap { overflow-x: auto; }
+
+.metal-table { min-width: 100%; border-collapse: collapse; }
+
+.metal-table thead tr {
+  background: linear-gradient(
+    108deg,
+    #0a1e38 0%, #112640 18%, #1a3255 32%,
+    #203a62 44%, #1a3255 56%, #112640 70%, #0a1e38 100%
+  );
+  background-size: 300% 100%;
+  background-position: 0% center;
+  transition: background-position 0.55s ease;
+}
+.metal-table thead tr:hover { background-position: 100% center; }
+
+.metal-table th {
+  padding: 0.75rem 1.25rem;
+  text-align: left;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #5878a0 0%, #88a8c8 42%, #b0cce0 50%, #88a8c8 58%, #5878a0 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  border-bottom: 1px solid rgba(80, 120, 170, 0.2);
+}
+
+.metal-table tbody tr:nth-child(even) { background-color: #091525; }
+.metal-table tbody tr:nth-child(odd)  { background-color: #0b1a2e; }
+.metal-table tbody tr:hover           { background-color: #102038 !important; }
+
+.metal-table td {
+  padding: 0.875rem 1.25rem;
+  font-size: 0.875rem;
+  color: rgba(175, 200, 225, 0.85);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  border-bottom: 1px solid rgba(50, 80, 115, 0.12);
+  white-space: nowrap;
+}
+
+/* ─── Input & Select ───────────────────────────────────────────────────────── */
+
+.metal-input {
+  background: linear-gradient(145deg, #091525 0%, #071020 100%);
+  border: 1px solid rgba(110, 145, 185, 0.2);
+  border-top-color: rgba(170, 200, 235, 0.25);
+  border-radius: 0.625rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: rgba(185, 210, 235, 0.9);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 1px 0 rgba(0,0,0,0.2) inset;
+}
+.metal-input::placeholder { color: rgba(90, 125, 165, 0.5); }
+.metal-input:focus {
+  border-color: rgba(234,170,0,0.4);
+  border-top-color: rgba(234,170,0,0.5);
+  box-shadow: 0 0 0 3px rgba(234,170,0,0.08), 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.metal-select {
+  background: linear-gradient(145deg, #091525 0%, #071020 100%);
+  border: 1px solid rgba(110, 145, 185, 0.2);
+  border-top-color: rgba(170, 200, 235, 0.25);
+  border-radius: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: rgba(185, 210, 235, 0.9);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.metal-select:focus {
+  border-color: rgba(234,170,0,0.4);
+  box-shadow: 0 0 0 3px rgba(234,170,0,0.08);
+}
+.metal-select option { background: #091525; color: rgba(185,210,235,0.9); }
+
+/* ─── Status Badges ────────────────────────────────────────────────────────── */
+
+.metal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+}
+.metal-badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.metal-badge-active   { background: rgba(0,90,170,0.2);   color: #82c0f8; border: 1px solid rgba(80,160,240,0.2); }
+.metal-badge-paid,
+.metal-badge-completed { background: rgba(170,120,0,0.18); color: #f5c842; border: 1px solid rgba(234,170,0,0.25); }
+.metal-badge-defaulted,
+.metal-badge-cancelled { background: rgba(200,50,50,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+.metal-badge-pending   { background: rgba(70,95,130,0.2);  color: rgba(150,180,215,0.8); border: 1px solid rgba(90,125,165,0.2); }
+
+/* ─── Athlete Card ─────────────────────────────────────────────────────────── */
+
+.metal-athlete-card {
+  background: linear-gradient(145deg, #0f1f35 0%, #0b1828 50%, #080f1e 100%);
+  border-radius: 0.875rem;
+  padding: 1.25rem;
+  border-top:    1px solid rgba(180, 205, 235, 0.18);
+  border-left:   1px solid rgba(150, 180, 215, 0.10);
+  border-right:  1px solid rgba(50,  75,  110, 0.08);
+  border-bottom: 1px solid rgba(30,  55,  90,  0.14);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.metal-athlete-card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.55), 0 0 0 1px rgba(234,170,0,0.12);
+  transform: translateY(-1px);
+}
+
+.metal-athlete-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: linear-gradient(145deg, #0f2035 0%, #1a3255 50%, #071020 100%);
+  box-shadow:
+    0 0 0 2px rgba(234,170,0,0.35),
+    0 0 0 3px rgba(0,0,0,0.4),
+    0 3px 10px rgba(0,0,0,0.5),
+    0 1px 0 rgba(255,255,255,0.06) inset;
+}
+
+/* ─── Loading ──────────────────────────────────────────────────────────────── */
+
+.metal-loading {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #5878a0 0%, #88a8c8 42%, #c8dff0 50%, #88a8c8 58%, #5878a0 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: metal-title-shimmer 2s ease infinite;
+}
+
+/* ─── Chart Tooltips ───────────────────────────────────────────────────────── */
+
+.metal-tooltip {
+  background: linear-gradient(145deg, #0f1f35, #080f1e);
+  border: 1px solid rgba(110, 145, 185, 0.2);
+  border-top-color: rgba(170, 200, 235, 0.25);
+  border-radius: 0.625rem;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.55);
+  font-size: 0.875rem;
+}
+.metal-tooltip-title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 600;
+  color: rgba(195, 218, 242, 0.9);
+  margin-bottom: 0.25rem;
+}
+.metal-tooltip-val {
+  font-family: 'JetBrains Mono', monospace;
+  color: #f5d058;
 }

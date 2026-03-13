@@ -8,36 +8,52 @@ export default function AthleteCard({ athlete, nilAmount }) {
   const initials = getInitials(athlete.name);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-md transition-shadow duration-200">
+    <div className="metal-athlete-card">
       <div className="flex items-center gap-4">
-        {/* Navy avatar with gold initials */}
-        <div
-          className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
-          style={{ backgroundColor: '#003057' }}
-        >
-          <span
-            className="text-base font-semibold"
-            style={{ color: '#EAAA00', fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.1rem' }}
-          >
+        <div className="metal-athlete-avatar">
+          <span style={{
+            color: '#EAAA00',
+            fontFamily: 'Cormorant Garamond, Georgia, serif',
+            fontSize: '1.1rem',
+            fontWeight: 600,
+          }}>
             {initials}
           </span>
         </div>
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-slate-900 text-sm truncate">{athlete.name}</h4>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <h4 style={{
+            fontFamily: 'DM Sans, system-ui, sans-serif',
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            color: 'rgba(210, 228, 248, 0.95)',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}>
+            {athlete.name}
+          </h4>
+          <p style={{ fontSize: '0.75rem', color: 'rgba(115, 145, 182, 0.7)', marginTop: '0.125rem' }}>
             {athlete.position}
             {athlete.jersey_number != null && (
-              <span className="ml-2 font-medium" style={{ color: '#003057' }}>#{athlete.jersey_number}</span>
+              <span style={{ marginLeft: '0.5rem', fontWeight: 600, color: 'rgba(234,170,0,0.7)' }}>
+                #{athlete.jersey_number}
+              </span>
             )}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-1 border-t border-slate-50">
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingTop: '0.5rem',
+        borderTop: '1px solid rgba(50, 80, 115, 0.2)',
+      }}>
         {athlete.social_followers > 0 ? (
           <div>
-            <p className="text-xs text-slate-400">Followers</p>
-            <p className="text-sm font-semibold text-slate-700" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            <p style={{ fontSize: '0.6875rem', color: 'rgba(100, 130, 165, 0.6)', fontFamily: 'DM Sans, system-ui, sans-serif' }}>Followers</p>
+            <p style={{ fontSize: '0.875rem', fontWeight: 600, fontFamily: 'JetBrains Mono, monospace', color: 'rgba(175, 200, 230, 0.9)' }}>
               {athlete.social_followers >= 1000
                 ? `${(athlete.social_followers / 1000).toFixed(0)}K`
                 : athlete.social_followers}
@@ -48,16 +64,11 @@ export default function AthleteCard({ athlete, nilAmount }) {
         )}
         {nilAmount > 0 ? (
           <div className="text-right">
-            <p className="text-xs text-slate-400">NIL Deal</p>
-            <p
-              className="text-sm font-semibold"
-              style={{ color: '#EAAA00', fontFamily: 'JetBrains Mono, monospace' }}
-            >
-              ${nilAmount.toLocaleString()}
-            </p>
+            <p style={{ fontSize: '0.6875rem', color: 'rgba(100, 130, 165, 0.6)', fontFamily: 'DM Sans, system-ui, sans-serif' }}>NIL Deal</p>
+            <p className="metal-athlete-nil">${nilAmount.toLocaleString()}</p>
           </div>
         ) : (
-          <span className="text-xs text-slate-300 italic">No active deal</span>
+          <span style={{ fontSize: '0.75rem', color: 'rgba(80, 110, 145, 0.5)', fontStyle: 'italic' }}>No active deal</span>
         )}
       </div>
     </div>

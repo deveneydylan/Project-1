@@ -12,8 +12,8 @@ const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const item = payload[0];
     return (
-      <div className="bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-lg text-sm">
-        <p className="font-semibold text-slate-800">{item.name}</p>
+      <div className="metal-tooltip">
+        <p className="metal-tooltip-title">{item.name}</p>
         <p style={{ fontFamily: 'JetBrains Mono, monospace', color: item.payload.fill }}>
           {item.payload.rate} of 14% total
         </p>
@@ -28,11 +28,10 @@ const CustomLegend = () => (
     {data.map((entry, index) => (
       <div key={entry.name} className="flex items-center gap-2.5">
         <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: COLORS[index] }} />
-        <div className="text-xs text-slate-600">
-          <span className="font-medium">{entry.name}</span>
+        <div style={{ fontSize: '0.75rem', color: 'rgba(165, 195, 225, 0.8)', fontFamily: 'DM Sans, system-ui, sans-serif' }}>
+          <span style={{ fontWeight: 500 }}>{entry.name}</span>
           <span
-            className="ml-1.5 font-semibold"
-            style={{ color: COLORS[index], fontFamily: 'JetBrains Mono, monospace' }}
+            style={{ marginLeft: '0.375rem', fontWeight: 600, color: COLORS[index], fontFamily: 'JetBrains Mono, monospace' }}
           >
             {entry.rate}
           </span>
@@ -67,7 +66,7 @@ export default function InterestSplitChart() {
         </ResponsiveContainer>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">14% Total Rate</p>
+        <p style={{ fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(100,135,175,0.6)', marginBottom: '0.25rem', fontFamily: 'DM Sans, system-ui, sans-serif' }}>14% Total Rate</p>
         <CustomLegend />
       </div>
     </div>

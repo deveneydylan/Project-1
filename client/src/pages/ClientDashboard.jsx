@@ -9,20 +9,12 @@ import * as api from '../api';
 const fmt = (val) => `$${(val || 0).toLocaleString()}`;
 
 function StatusBadge({ val }) {
-  const styles = {
-    active: { bg: 'rgba(0,48,87,0.1)', color: '#003057' },
-    paid: { bg: 'rgba(234,170,0,0.12)', color: '#c89200' },
-    defaulted: { bg: 'rgba(239,68,68,0.1)', color: '#dc2626' },
+  const cls = {
+    active: 'metal-badge metal-badge-active',
+    paid: 'metal-badge metal-badge-paid',
+    defaulted: 'metal-badge metal-badge-defaulted',
   };
-  const s = styles[val] || styles.active;
-  return (
-    <span
-      className="px-2.5 py-1 rounded-full text-xs font-medium capitalize"
-      style={{ backgroundColor: s.bg, color: s.color }}
-    >
-      {val}
-    </span>
-  );
+  return <span className={cls[val] || 'metal-badge metal-badge-pending'}>{val}</span>;
 }
 
 export default function ClientDashboard() {
@@ -71,7 +63,7 @@ export default function ClientDashboard() {
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <p className="text-slate-400 text-sm tracking-widest uppercase">Loading</p>
+        <p className="metal-loading">Loading</p>
       </div>
     );
   }
@@ -84,8 +76,11 @@ export default function ClientDashboard() {
     return acc;
   }, {});
 
+  const monoStyle = { fontFamily: 'JetBrains Mono, monospace' };
+  const monoGold  = { fontFamily: 'JetBrains Mono, monospace', color: '#f5d058' };
+
   const loanColumns = [
-    { key: 'principal_amount', label: 'Principal', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>{fmt(val)}</span> },
+    { key: 'principal_amount', label: 'Principal', render: (val) => <span style={monoStyle}>{fmt(val)}</span> },
     { key: 'interest_rate', label: 'Rate', render: (val) => `${val}%` },
     { key: 'start_date', label: 'Start Date' },
     { key: 'end_date', label: 'End Date' },
@@ -94,10 +89,10 @@ export default function ClientDashboard() {
 
   const paymentColumns = [
     { key: 'payment_date', label: 'Date' },
-    { key: 'amount', label: 'Amount', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>{fmt(val)}</span> },
-    { key: 'principal_paid', label: 'Principal Paid', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>{fmt(val)}</span> },
-    { key: 'interest_paid', label: 'Interest Paid', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>{fmt(val)}</span> },
-    { key: 'nil_contribution', label: 'NIL Contribution', render: (val) => <span style={{ fontFamily: 'JetBrains Mono, monospace', color: '#c89200' }}>{fmt(val)}</span> },
+    { key: 'amount', label: 'Amount', render: (val) => <span style={monoStyle}>{fmt(val)}</span> },
+    { key: 'principal_paid', label: 'Principal Paid', render: (val) => <span style={monoStyle}>{fmt(val)}</span> },
+    { key: 'interest_paid', label: 'Interest Paid', render: (val) => <span style={monoStyle}>{fmt(val)}</span> },
+    { key: 'nil_contribution', label: 'NIL Contribution', render: (val) => <span style={monoGold}>{fmt(val)}</span> },
   ];
 
   // athletes from company stats (all 22 GT players)
@@ -108,23 +103,15 @@ export default function ClientDashboard() {
       {/* Header with company selector */}
       <div className="flex items-start justify-between mb-8 gap-4">
         <div>
-          <h1
-            className="text-3xl font-semibold"
-            style={{ color: '#003057', fontFamily: 'Cormorant Garamond, Georgia, serif' }}
-          >
-            {company?.name}
-          </h1>
-          <p className="text-sm text-slate-500 mt-1">Client Portal</p>
+          <h1 className="metal-page-title">{company?.name}</h1>
+          <p className="metal-page-subtitle">Client Portal</p>
         </div>
         <div>
-          <label className="block text-xs text-slate-400 mb-1 uppercase tracking-wider">Company</label>
+          <label className="block mb-1" style={{ fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(100,135,175,0.65)' }}>Company</label>
           <select
             value={companyId}
             onChange={(e) => navigate(`/client/${e.target.value}`)}
-            className="border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 outline-none cursor-pointer bg-white"
-            style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}
-            onFocus={e => e.target.style.borderColor = '#EAAA00'}
-            onBlur={e => e.target.style.borderColor = '#e2e8f0'}
+            className="metal-select"
           >
             {companies.map((c) => (
               <option key={c.id} value={c.id}>{c.name}</option>
@@ -142,6 +129,7 @@ export default function ClientDashboard() {
         <StatCard
           title="Total Paid"
           value={fmt(stats?.total_paid)}
+          subtitle="Principal + interest"
         />
         <StatCard
           title="NIL Contributed (7%)"

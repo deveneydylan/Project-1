@@ -1,6 +1,7 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import ClientDashboard from './pages/ClientDashboard';
 import InternalDashboard from './pages/InternalDashboard';
+import LandingPage from './pages/LandingPage';
 
 function GTLogo() {
   return (
@@ -28,36 +29,35 @@ function GTLogo() {
 
 function App() {
   const location = useLocation();
-  const isInternal = location.pathname === '/';
+  const isHome = location.pathname === '/';
+  const isInternal = location.pathname === '/dashboard';
   const isClient = location.pathname.startsWith('/client');
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#f1f5f9' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#010d1a' }}>
       {/* Navigation */}
       <nav style={{ backgroundColor: '#003057' }} className="shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-14 items-center">
-            <GTLogo />
-            <div className="flex items-center gap-1">
+            <Link to="/">
+              <GTLogo />
+            </Link>
+            <div className="flex items-center gap-2">
               <Link
                 to="/"
-                className="px-4 py-2 text-sm font-medium transition-all duration-150 relative"
-                style={{
-                  color: isInternal ? '#EAAA00' : 'rgba(255,255,255,0.65)',
-                  borderBottom: isInternal ? '2px solid #EAAA00' : '2px solid transparent',
-                  fontFamily: 'DM Sans, system-ui, sans-serif',
-                }}
+                className={`metal-tab${isHome ? ' metal-tab-active' : ''}`}
+              >
+                Home
+              </Link>
+              <Link
+                to="/dashboard"
+                className={`metal-tab${isInternal ? ' metal-tab-active' : ''}`}
               >
                 Internal
               </Link>
               <Link
                 to="/client/1"
-                className="px-4 py-2 text-sm font-medium transition-all duration-150"
-                style={{
-                  color: isClient ? '#EAAA00' : 'rgba(255,255,255,0.65)',
-                  borderBottom: isClient ? '2px solid #EAAA00' : '2px solid transparent',
-                  fontFamily: 'DM Sans, system-ui, sans-serif',
-                }}
+                className={`metal-tab${isClient ? ' metal-tab-active' : ''}`}
               >
                 Client Portal
               </Link>
@@ -68,7 +68,8 @@ function App() {
 
       <main>
         <Routes>
-          <Route path="/" element={<InternalDashboard />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<InternalDashboard />} />
           <Route path="/client/:companyId" element={<ClientDashboard />} />
         </Routes>
       </main>
